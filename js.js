@@ -7,70 +7,67 @@ function getComputerChoice(choice) {
     else return "scissors";
 }
 
-function getHumanChoice(choice) {
-    return prompt("Rock, paper or scissors?").toLowerCase();
-}
+const button = document.querySelectorAll('button')
+button.forEach((button) => {
+    button.addEventListener('click', () => {
+        if (humanScore == 5 || computerScore == 5) return false;
+        playRound(button.id);
+    })
+})
 
 let humanScore = 0
 let computerScore = 0
 let round = 0
 
-function playRound() {
+const gamefeed = document.querySelector('h3');
+const humScore = document.querySelector("#humanScore");
+const compScore = document.querySelector("#computerScore");
+
+function playRound(HC) {
     let CC = getComputerChoice();
-    let HC = getHumanChoice();
     if (CC == HC) {
-        console.log("It's a tie!");
+        gamefeed.innerText = "It's a tie! Try again!";
     }
     else if (CC == "rock") {
         if (HC == "scissors") {
-        console.log("Rock smashes scissors! You lose!");
+        gamefeed.innerText = "Rock smashes scissors! You lose!";
         computerScore++;
         round++;
         }
         else if (HC == "paper") {
-            console.log("Paper wraps rock! You win!");
+            gamefeed.innerText = "Paper wraps rock! You win!";
             humanScore++;
             round++;
         }
     }
     else if (CC == "paper") {
         if (HC == "rock") {
-            console.log("Paper wraps rock! You lose!");
+            gamefeed.innerText = "Paper wraps rock! You lose!";
             computerScore++;
             round++;
         }
         else if (HC == "scissors") {
-            console.log("Scissors cut paper! You win!");
+            gamefeed.innerText = "Scissors cut paper! You win!";
             humanScore++;
             round++;
         }
     }
     else if (CC == "scissors") {
         if (HC == "rock") {
-            console.log("Rock smashes scissors! You win!");
+            gamefeed.innerText = "Rock smashes scissors! You win!";
             humanScore++;
             round++;
         }
         else if (HC == "paper") {
-            console.log("Scissors cut paper! You lose!");
+            gamefeed.innerText = "Scissors cut paper! You lose!";
             computerScore++;
             round++;
         }
     }
-    
-    console.log(`The current score is: Computer has ${computerScore} points and Human has ${humanScore} points.`);
+    humScore.innerText = humanScore;
+    compScore.innerText = computerScore;
+    if (humanScore == 5) gamefeed.innerText = "You won!!! Congratulations!";
+    if (computerScore == 5) gamefeed.innerText = "You lost! :( Reload the page and try again!";
 }
 
-function playGame() {
-    for (; round <= 6;) {
-        playRound();
-        if (round == 5 && computerScore > humanScore) {
-            console.log("Game's over! Computer won!");
-            break;
-        }
-        else if (round == 5 && humanScore > computerScore) {
-            console.log("Game's over! Human won!");
-            break;
-        }
-    }
-}
+
